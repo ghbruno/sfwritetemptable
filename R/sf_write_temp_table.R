@@ -1,4 +1,4 @@
-sf_write_temp_table<- function(con, df, table_name, overwrite=FALSE) {
+sf_temp_table_udf<- function(con, df, table_name, overwrite=FALSE) {
 
   
   data_types_transalation<-data.frame(data_type=c('integer','character', 'numeric', 'Date', 'POSIXct', 'POSIXt'),
@@ -12,7 +12,7 @@ sf_write_temp_table<- function(con, df, table_name, overwrite=FALSE) {
   
   if(length(columns)!=length(data_type)) {print('ERROR'); break}
   
-  data_type_df<-data.frame(columns=names(data_type),data_type) %>% inner_join(data_types_transalation, by = "data_type")
+  data_type_df<-merge(data.frame(columns=names(data_type),data_type), data_types_transalation, on = "data_type")
   
   values<-paste("('",paste(apply(df,1,paste,collapse="','"), collapse="'),('"),"')",sep='')
   
@@ -23,7 +23,7 @@ sf_write_temp_table<- function(con, df, table_name, overwrite=FALSE) {
   RJDBC::dbSendQuery(con, paste("insert into ", table_name," (",paste(columns,collapse=','),") values ",values,";"))
   cat("TABLE'S DESCRIPTION\n")
   print(RJDBC::dbGetQuery(con,paste("DESC TABLE ",table_name,";",sep='')))
-  cat("\n 10 OBS SAMPLE\n")
+  cat("\n\n\n 10 OBS SAMPLE\n")
   print(RJDBC::dbGetQuery(con,paste("SELECT * FROM ",table_name," LIMIT 10;",sep='')))
   
 }
