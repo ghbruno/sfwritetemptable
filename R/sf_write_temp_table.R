@@ -12,7 +12,7 @@ sf_write_temp_table<- function(con, df, table_name, overwrite=FALSE) {
   
   if(length(columns)!=length(data_types)) {print('ERROR'); break}
   
-  data_type_df<-data.frame(columns=names(data_types),data_type) %>% inner_join(data_types_transalation, by = "data_type")
+  data_type_df<-data.frame(columns=names(data_type),data_type) %>% inner_join(data_types_transalation, by = "data_type")
   
   values<-paste("('",paste(apply(df,1,paste,collapse="','"), collapse="'),('"),"')",sep='')
   
