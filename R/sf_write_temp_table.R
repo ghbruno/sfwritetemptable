@@ -10,7 +10,7 @@ sf_write_temp_table<- function(con, df, table_name, overwrite=FALSE) {
   columns<-colnames(df)
   data_type<-unlist(lapply(df,function (x) class(x)[1]))
   
-  if(length(columns)!=length(data_types)) {print('ERROR'); break}
+  if(length(columns)!=length(data_type)) {print('ERROR'); break}
   
   data_type_df<-data.frame(columns=names(data_type),data_type) %>% inner_join(data_types_transalation, by = "data_type")
   
