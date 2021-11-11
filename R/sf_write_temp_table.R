@@ -1,4 +1,4 @@
-sf_temp_table_udf<- function(con, df, table_name, overwrite=FALSE) {
+sf_write_temp_table<- function(con, df, table_name, overwrite=FALSE) {
 
   
   data_types_transalation<-data.frame(data_type=c('integer','character', 'numeric', 'Date', 'POSIXct', 'POSIXt'),
